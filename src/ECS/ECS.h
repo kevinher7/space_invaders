@@ -28,22 +28,25 @@ template <typename T>
 inline ComponentID getComponentTypeID() noexcept
 {
     static ComponentID typeID{getComponentTypeID()};
-    return typeID
+    return typeID;
 }
 
 class Component
 {
 public:
-    Component() : entity{} {}
-    virtual ~Component();
+    Component() : entity{nullptr} {}
+    Component(const Component &) : entity{nullptr} {};
+    Component &operator=(const Component &) = delete;
+    Component(Component &&) = delete;
+    Component &operator=(Component &&) = delete;
+    virtual ~Component() {}
 
     virtual void init() {}
     virtual void update() {}
     virtual void draw() {}
 
-    Entity entity;
+    Entity *entity;
 };
-
 class Entity
 {
 public:
@@ -114,6 +117,7 @@ private:
 class Manager
 {
 public:
+    Manager() : m_gameEntities{} {}
     void update()
     {
         for (auto &entity : m_gameEntities)

@@ -1,7 +1,7 @@
 #ifndef TEXTUREMANAGER_H
 #define TEXTUREMANAGER_H
 
-#include <SDL3/SDL.h>
+#include <SDL3/SDL.h> // no se pq pero no puede abrir desde ECS
 
 class TextureManager
 {

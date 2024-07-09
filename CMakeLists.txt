@@ -16,6 +16,7 @@ set(SOURCE_FILES
         "src/main.cpp"
         "src/Game.cpp"
         "src/TextureManager.cpp"
+        "src/Vector2D.cpp"
         )
 
 add_executable(space_invaders ${SOURCE_FILES})
@@ -29,6 +30,7 @@ find_package(SDL3 REQUIRED)
 find_package(SDL3_image REQUIRED)
 
 target_include_directories(space_invaders
+    PRIVATE "./src/ECS"
     PUBLIC ${SDL3_INCLUDE_DIRS}
     PUBLIC ${SDL3IMAGE_INCLUDE_DIRS}
 )

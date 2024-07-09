@@ -1,10 +1,15 @@
 #include "Game.h"
 #include "TextureManager.h"
+#include "Components.h"
 
 #include <SDL3_image/SDL_image.h>
 #include <iostream>
 
 SDL_Event Game::gameEvent{};
+
+Manager gameManager{};
+
+Entity &player(gameManager.addEntity());
 
 Game::Game(const char *windowTitle, int width, int height)
     : windowWidth{width}, windowHeight{height}, m_gameWindow{nullptr}, m_isRunning{false}
@@ -27,12 +32,9 @@ Game::Game(const char *windowTitle, int width, int height)
     {
         std::cout << "Subsystems Initialization Failed\n";
     }
-}
 
-Game::~Game()
-{
-    SDL_DestroyWindow(m_gameWindow);
-    SDL_DestroyRenderer(gameRenderer);
+    player.addComponent<TransformComponent>();
+    player.addComponent<SpriteComponent>("./assets/player.png");
 }
 
 void Game::handleEvents()
@@ -49,5 +51,21 @@ void Game::handleEvents()
     }
 }
 
-void Game::update() {}
-void Game::render() {}
+void Game::update()
+{
+    gameManager.refresh();
+    gameManager.update();
+}
+void Game::render()
+{
+    SDL_RenderClear(gameRenderer);
+    gameManager.draw();
+    SDL_RenderPresent(gameRenderer);
+}
+
+Game::~Game()
+{
+    SDL_DestroyWindow(m_gameWindow);
+    SDL_DestroyRenderer(gameRenderer);
+    SDL_Quit();
+}
