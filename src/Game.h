@@ -19,7 +19,7 @@ public:
     void update();
     void render();
 
-    bool running() { return m_isRunning; }
+    bool running() const { return m_isRunning; }
 
     int windowWidth;
     int windowHeight;
