@@ -3,6 +3,8 @@
 
 #include <SDL3/SDL.h>
 
+class Manager;
+
 class Game
 {
 public:
@@ -25,6 +27,7 @@ public:
     int windowHeight;
     inline static SDL_Renderer *gameRenderer{nullptr};
     static SDL_Event gameEvent;
+    static Manager gameManager;
 
 private:
     SDL_Window *m_gameWindow;

@@ -2,6 +2,7 @@
 #define KEYBOARDCONTROLLER_H
 
 #include "Components.h"
+#include "../Game.h"
 
 class KeyboardController : public Component
 {

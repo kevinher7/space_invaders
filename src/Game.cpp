@@ -1,15 +1,20 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "Components.h"
+#include "Enemies/Enemies.h"
 
 #include <SDL3_image/SDL_image.h>
 #include <iostream>
 
 SDL_Event Game::gameEvent{};
+Manager Game::gameManager{};
 
-Manager gameManager{};
+Entity &player(Game::gameManager.addEntity());
 
-Entity &player(gameManager.addEntity());
+Enemies firstRow{1};
+Enemies secondRow{2};
+Enemies thirdRow{3};
+Enemies fourthRow{4};
 
 Game::Game(const char *windowTitle, int width, int height)
     : windowWidth{width}, windowHeight{height}, m_gameWindow{nullptr}, m_isRunning{false}
@@ -36,6 +41,11 @@ Game::Game(const char *windowTitle, int width, int height)
     player.addComponent<TransformComponent>(windowWidth / 2 - 32, windowHeight - 64);
     player.addComponent<SpriteComponent>("./assets/player.png");
     player.addComponent<KeyboardController>();
+
+    firstRow.init();
+    secondRow.init();
+    thirdRow.init();
+    fourthRow.init();
 }
 
 void Game::handleEvents()
@@ -54,13 +64,13 @@ void Game::handleEvents()
 
 void Game::update()
 {
-    gameManager.refresh();
-    gameManager.update();
+    Game::gameManager.refresh();
+    Game::gameManager.update();
 }
 void Game::render()
 {
     SDL_RenderClear(gameRenderer);
-    gameManager.draw();
+    Game::gameManager.draw();
     SDL_RenderPresent(gameRenderer);
 }
 
