@@ -39,7 +39,7 @@ public:
     Component &operator=(const Component &) = delete;
     Component(Component &&) = delete;
     Component &operator=(Component &&) = delete;
-    virtual ~Component() {}
+    virtual ~Component() = default;
 
     virtual void init() {}
     virtual void update() {}
@@ -90,7 +90,7 @@ public:
         T *component(new T(std::forward<TArgs>(mArgs)...));
         component->entity = this;
 
-        std::unique_ptr<Component> uPtrComponent{component};
+        std::unique_ptr<Component> uPtrComponent{component}; // add std::make_unique?
         m_components.emplace_back(std::move(uPtrComponent));
 
         m_componentArray[getComponentTypeID<T>()] = component;

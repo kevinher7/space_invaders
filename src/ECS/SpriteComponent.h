@@ -3,11 +3,10 @@
 
 #include "Components.h"
 #include "../TextureManager.h"
-#include <memory>
 
 class SpriteComponent : public Component
 {
-public: // Trying with make_unique (could fail)
+public: // Trying with make_unique (could fail) : It didn't fail :It failed xd
     SpriteComponent()
         : m_transform{nullptr}, m_texture{nullptr}, m_srcRec{0.0f, 0.0f, 64.0f, 64.0f}, m_destRec{0.0f, 0.0f, 64.0f, 64.0f} {}
     SpriteComponent(const char *spritePath)
@@ -18,7 +17,7 @@ public: // Trying with make_unique (could fail)
 
     void init() override
     {
-        m_transform = std::make_unique<TransformComponent>(entity->getComponent<TransformComponent>());
+        m_transform = &entity->getComponent<TransformComponent>();
         m_srcRec.w = m_transform->width;
         m_srcRec.h = m_transform->height;
     }
@@ -49,7 +48,7 @@ public: // Trying with make_unique (could fail)
     ~SpriteComponent(){};
 
 private:
-    std::unique_ptr<TransformComponent> m_transform;
+    TransformComponent *m_transform;
     SDL_Texture *m_texture;
     SDL_FRect m_srcRec, m_destRec;
 };

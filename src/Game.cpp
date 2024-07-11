@@ -33,8 +33,9 @@ Game::Game(const char *windowTitle, int width, int height)
         std::cout << "Subsystems Initialization Failed\n";
     }
 
-    player.addComponent<TransformComponent>();
+    player.addComponent<TransformComponent>(windowWidth / 2 - 32, windowHeight - 64);
     player.addComponent<SpriteComponent>("./assets/player.png");
+    player.addComponent<KeyboardController>();
 }
 
 void Game::handleEvents()
