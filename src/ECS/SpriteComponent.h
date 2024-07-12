@@ -1,7 +1,8 @@
 #ifndef SPRITECOMPONENT_H
 #define SPRITECOMPONENT_H
 
-#include "Components.h"
+#include "ECS.h"
+#include "TransformComponent.h"
 #include "../TextureManager.h"
 
 class SpriteComponent : public Component

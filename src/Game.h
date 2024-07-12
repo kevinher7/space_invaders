@@ -2,8 +2,10 @@
 #define GAME_H
 
 #include <SDL3/SDL.h>
+#include <vector>
 
 class Manager;
+class ColliderComponent;
 
 class Game
 {
@@ -27,6 +29,7 @@ public:
     int windowHeight;
     inline static SDL_Renderer *gameRenderer{nullptr};
     static SDL_Event gameEvent;
+    static std::vector<ColliderComponent *> gameColliders;
     static Manager gameManager;
 
 private:

@@ -2,14 +2,17 @@
 #include "TextureManager.h"
 #include "Components.h"
 #include "Enemies/Enemies.h"
+#include "Collision.h"
 
 #include <SDL3_image/SDL_image.h>
 #include <iostream>
 
 SDL_Event Game::gameEvent{};
 Manager Game::gameManager{};
+std::vector<ColliderComponent *> Game::gameColliders{};
 
 Entity &player(Game::gameManager.addEntity());
+Entity &playerTest(Game::gameManager.addEntity());
 
 Enemies firstRow{1};
 Enemies secondRow{2};
@@ -40,7 +43,12 @@ Game::Game(const char *windowTitle, int width, int height)
 
     player.addComponent<TransformComponent>(windowWidth / 2 - 32, windowHeight - 64);
     player.addComponent<SpriteComponent>("./assets/player.png");
+    player.addComponent<ColliderComponent>("player");
     player.addComponent<KeyboardController>();
+
+    playerTest.addComponent<TransformComponent>(windowWidth / 2 - 32, windowHeight - 64);
+    playerTest.addComponent<SpriteComponent>("./assets/player.png");
+    playerTest.addComponent<ColliderComponent>("playerTest");
 
     firstRow.init();
     secondRow.init();
@@ -66,6 +74,11 @@ void Game::update()
 {
     Game::gameManager.refresh();
     Game::gameManager.update();
+
+    for (auto collider : gameColliders)
+    {
+        Collision::AABB(player.getComponent<ColliderComponent>(), *collider);
+    }
 }
 void Game::render()
 {
